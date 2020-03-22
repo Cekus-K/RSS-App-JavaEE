@@ -28,6 +28,6 @@ public class SendGridServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var email = req.getParameter(EMAIL_PARAM);
-        resp.getWriter().write(service.sendMail(email));
+        service.sendMail(email);
     }
 }

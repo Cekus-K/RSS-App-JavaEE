@@ -34,19 +34,15 @@
 </main>
 <script>
     (function() {
-        const USER_URL = 'https://cekus-rss-app.azurewebsites.net/user';
         // const USER_URL = 'http://localhost:8080/user';
-        const emailAddress = document.getElementById('emailAddress');
-
-        const RSS_URL = 'https://cekus-rss-app.azurewebsites.net/rss';
         // const RSS_URL = 'http://localhost:8080/rss';
-        const rssHyperlink = document.getElementById('rssHyperlink');
-        const emailView = document.getElementById('emailView');
-
-        const SEND_URL = 'https://cekus-rss-app.azurewebsites.net/send';
         // const SEND_URL = 'http://localhost:8080/send';
-        const allRSS = document.getElementById('allRss');
+        const USER_URL = 'https://cekus-rss-app.azurewebsites.net/user';
+        const RSS_URL = 'https://cekus-rss-app.azurewebsites.net/rss';
+        const SEND_URL = 'https://cekus-rss-app.azurewebsites.net/send';
 
+        const emailAddress = document.getElementById('emailAddress');
+        const rssHyperlink = document.getElementById('rssHyperlink');
         // add new email (User)
         document.getElementById('addUser').addEventListener('click', (event) => {
             event.preventDefault();
@@ -68,10 +64,7 @@
         // add new RSS
         document.getElementById('addRss').addEventListener('click', (event) => {
             event.preventDefault();
-            const formObj = {
-                email: emailAddress.value
-            };
-            fetch(RSS_URL + "?" + new URLSearchParams(formObj), {
+            fetch(RSS_URL + "?" + new URLSearchParams({email: emailAddress.value}), {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -89,13 +82,11 @@
         // send RSS content to e-mail address
         document.getElementById('sendEmail').addEventListener('click', (event) => {
             event.preventDefault();
-            const formObj = {
-                email: emailAddress.value
-            };
-            fetch(SEND_URL + "?" + new URLSearchParams(formObj))
+            fetch(SEND_URL + "?" + new URLSearchParams({email: emailAddress.value}));
+            fetch(RSS_URL)
                 .then(response => response.text())
                 .then((text) => {
-                    emailView.innerHTML = text
+                    document.getElementById('emailView').innerHTML = text
                 })
         });
 

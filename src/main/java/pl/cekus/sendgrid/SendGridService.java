@@ -21,7 +21,7 @@ class SendGridService {
         this.service = service;
     }
 
-    String sendMail(String recipient) {
+    void sendMail(String recipient) {
 
         Email from = new Email("azure_af4f7f25fa95beaf7e82a6199ea5145c@azure.com");
         String subject = "Kamil Cekus: Message from RSS App sending by SendGrid";
@@ -43,6 +43,5 @@ class SendGridService {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return service.parseRSS();
     }
 }
