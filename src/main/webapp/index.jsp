@@ -11,11 +11,11 @@
     <h1>RSS App</h1>
     <form id="mainForm" class="pure-form">
         <div>
-            <input id="emailAddress" class="pure-input-rounded pure-input-2-3" placeholder="e-mail address" style="width: 69%">
+            <input type="email" id="emailAddress" class="pure-input-rounded pure-input-2-3" placeholder="e-mail address" style="width: 69%">
             <button id="addUser" class="pure-button pure-button-primary" style="width: 20%">Confirm</button>
         </div>
         <div style="margin-top: 3px">
-            <input id="rssHyperlink" class="pure-input-rounded pure-input-2-3" placeholder="URL" style="width: 90%">
+            <input type="url" id="rssHyperlink" class="pure-input-rounded pure-input-2-3" placeholder="URL" style="width: 90%">
         </div>
     </form>
     <div style="text-align: left">
@@ -68,13 +68,16 @@
         // add new RSS
         document.getElementById('addRss').addEventListener('click', (event) => {
             event.preventDefault();
-            fetch(RSS_URL, {
+            const formObj = {
+                email: emailAddress.value
+            };
+            fetch(RSS_URL + "?" + new URLSearchParams(formObj), {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ hyperlink: rssHyperlink.value, email: 1 })
+                body: JSON.stringify({ hyperlink: rssHyperlink.value })
             })
                 .then(processOkResponse)
                 .then(createNewRss)
@@ -94,7 +97,6 @@
                 .then((text) => {
                     emailView.innerHTML = text
                 })
-                .then(() => allRSS.value = '');
         });
 
         // add RSS to RSS List

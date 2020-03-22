@@ -11,6 +11,7 @@ import java.io.IOException;
 
 @WebServlet("/rss")
 public class RSSServlet extends HttpServlet {
+    public static final String EMAIL_PARAM = "email";
     private ObjectMapper mapper;
     private RSSService service;
 
@@ -36,7 +37,8 @@ public class RSSServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var newRSS = mapper.readValue(req.getInputStream(), RSS.class);
+        var email = req.getParameter(EMAIL_PARAM);
         resp.setContentType("application/json;charset=UTF-8");
-        mapper.writeValue(resp.getOutputStream(), service.addRSS(newRSS));
+        mapper.writeValue(resp.getOutputStream(), service.addRSS(newRSS, email));
     }
 }

@@ -13,9 +13,11 @@ public class UserService {
     }
 
     User addUser(User newUser) {
-        for (User user : repository.findAll()) {
-            if (newUser.getEmail().equals(user.getEmail())) {
-                return user;
+        if (repository.findAll() != null) {
+            for (User user : repository.findAll()) {
+                if (newUser.getEmail().equals(user.getEmail())) {
+                    return user;
+                }
             }
         }
         return repository.addUser(newUser);
